@@ -1,0 +1,262 @@
+/* YouTube Q&A Chat Widget */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+#yt-qa-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  font-family: 'DM Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* ── Toggle Button ── */
+#yt-qa-toggle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #ff4444;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(255,68,68,0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex-shrink: 0;
+}
+#yt-qa-toggle:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(255,68,68,0.55);
+}
+#yt-qa-toggle svg { pointer-events: none; }
+
+/* ── Chat Panel ── */
+#yt-qa-panel {
+  width: 360px;
+  height: 500px;
+  background: #0f0f0f;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+  transform-origin: bottom right;
+  animation: panelIn 0.2s ease;
+}
+@keyframes panelIn {
+  from { opacity: 0; transform: scale(0.92) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+#yt-qa-panel.hidden { display: none; }
+
+/* ── Header ── */
+#yt-qa-header {
+  padding: 14px 16px;
+  background: #161616;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+#yt-qa-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#yt-qa-header-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #ff4444;
+  box-shadow: 0 0 6px rgba(255,68,68,0.8);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+#yt-qa-header-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.01em;
+}
+#yt-qa-header-sub {
+  font-size: 10px;
+  color: #555;
+  font-family: 'DM Mono', monospace;
+}
+#yt-qa-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  padding: 4px;
+  display: flex;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+#yt-qa-close:hover { color: #fff; background: #2a2a2a; }
+
+/* ── Status Bar ── */
+#yt-qa-status {
+  padding: 6px 16px;
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  color: #555;
+  background: #0a0a0a;
+  border-bottom: 1px solid #1a1a1a;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#yt-qa-status.ready { color: #4ade80; }
+#yt-qa-status.loading { color: #fbbf24; }
+#yt-qa-status.error { color: #ff4444; }
+
+/* ── Messages ── */
+#yt-qa-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: #2a2a2a transparent;
+}
+#yt-qa-messages::-webkit-scrollbar { width: 4px; }
+#yt-qa-messages::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+
+.yt-qa-msg {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: msgIn 0.18s ease;
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.yt-qa-msg-label {
+  font-size: 9px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.yt-qa-msg.user .yt-qa-msg-label { color: #ff4444; align-self: flex-end; }
+.yt-qa-msg.assistant .yt-qa-msg-label { color: #4ade80; }
+
+.yt-qa-msg-bubble {
+  padding: 10px 13px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  max-width: 88%;
+}
+.yt-qa-msg.user .yt-qa-msg-bubble {
+  background: #1e1e1e;
+  color: #e8e8e8;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.yt-qa-msg.assistant .yt-qa-msg-bubble {
+  background: #161616;
+  color: #d4d4d4;
+  border: 1px solid #2a2a2a;
+  border-bottom-left-radius: 4px;
+}
+
+/* Thinking dots */
+.yt-qa-thinking {
+  display: flex;
+  gap: 4px;
+  padding: 12px 13px;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  border-bottom-left-radius: 4px;
+  width: fit-content;
+}
+.yt-qa-thinking span {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #555;
+  animation: dot 1.2s infinite;
+}
+.yt-qa-thinking span:nth-child(2) { animation-delay: 0.2s; }
+.yt-qa-thinking span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dot {
+  0%, 80%, 100% { transform: scale(1); opacity: 0.4; }
+  40% { transform: scale(1.3); opacity: 1; }
+}
+
+/* Empty state */
+#yt-qa-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #333;
+  text-align: center;
+  padding: 24px;
+}
+#yt-qa-empty-icon { font-size: 32px; }
+#yt-qa-empty p { font-size: 12px; line-height: 1.6; }
+
+/* ── Input Area ── */
+#yt-qa-input-area {
+  padding: 12px;
+  border-top: 1px solid #1e1e1e;
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  background: #0f0f0f;
+}
+#yt-qa-input {
+  flex: 1;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 9px 13px;
+  color: #e8e8e8;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  outline: none;
+  resize: none;
+  line-height: 1.4;
+  max-height: 100px;
+  transition: border-color 0.15s;
+  scrollbar-width: none;
+}
+#yt-qa-input:focus { border-color: #ff4444; }
+#yt-qa-input::placeholder { color: #444; }
+
+#yt-qa-send {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #ff4444;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+  align-self: flex-end;
+}
+#yt-qa-send:hover { background: #e03333; }
+#yt-qa-send:active { transform: scale(0.93); }
+#yt-qa-send:disabled { background: #2a2a2a; cursor: not-allowed; }
+#yt-qa-send svg { pointer-events: none; }
