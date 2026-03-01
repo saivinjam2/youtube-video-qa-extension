@@ -146,7 +146,7 @@ function addMessage(role, text) {
   const msg = document.createElement('div');
   msg.className = `yt-qa-msg ${role}`;
   msg.innerHTML = `
-    <div class="yt-qa-msg-label">${role === 'user' ? 'you' : 'claude'}</div>
+    <div class="yt-qa-msg-label">${role === 'user' ? 'you' : 'AI'}</div>
     <div class="yt-qa-msg-bubble">${text.replace(/\n/g, '<br>')}</div>
   `;
   msgs.appendChild(msg);
