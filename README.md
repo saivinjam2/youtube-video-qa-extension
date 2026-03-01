@@ -45,6 +45,7 @@ User → Chrome Extension UI → Background Service Worker → Groq API → Resp
 ---
 
 ## 📦 File Structure
+.
 ├── manifest.json
 ├── background.js
 ├── content.js
@@ -52,6 +53,9 @@ User → Chrome Extension UI → Background Service Worker → Groq API → Resp
 ├── popup.js
 ├── styles.css
 ├── icons/
+│   ├── icon16.png
+│   ├── icon48.png
+│   └── icon128.png
 └── README.md
 
 ---
