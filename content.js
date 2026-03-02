@@ -163,7 +163,7 @@ function showThinking() {
   el.className = 'yt-qa-msg assistant';
   el.id = 'yt-qa-thinking';
   el.innerHTML = `
-    <div class="yt-qa-msg-label">claude</div>
+    <div class="yt-qa-msg-label">model</div>
     <div class="yt-qa-thinking"><span></span><span></span><span></span></div>
   `;
   msgs.appendChild(el);
